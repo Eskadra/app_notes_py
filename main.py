@@ -1,4 +1,5 @@
 import json
+import datetime
 
 def save_notes(notes):
     with open("notes.json", "w") as file:
@@ -22,7 +23,8 @@ def create_note():
     note_id = create_note_id(notes)
     title = input("Введите заголовок заметки: ")
     body = input("Введите текст заметки: ")
-    note = {"id": note_id, "title": title, "body": body}
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    note = {"id": note_id, "title": title, "body": body, "datetime": timestamp}
     notes.append(note)
     save_notes(notes)
     print("Заметка успешно создана.")
@@ -39,6 +41,7 @@ def read_notes():
             print(f"ID: {note['id']}")
             print(f"Заголовок: {note['title']}")
             print(f"Текст: {note['body']}")
+            print(f"Дата/время создания: {note['datetime']}")
             print("\n")
             print()
 
@@ -56,6 +59,7 @@ def edit_note():
                 body = input("Введите новый текст заметки: ")
                 note["title"] = title
                 note["body"] = body
+                note["datetime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 save_notes(notes)
                 print("Заметка успешно отредактирована.")
                 return
@@ -106,3 +110,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
